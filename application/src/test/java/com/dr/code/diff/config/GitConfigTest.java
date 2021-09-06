@@ -5,6 +5,8 @@ import com.dr.code.diff.dto.DiffMethodParams;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.IOException;
+
 /**
  * @ProjectName: base-service
  * @Package: com.dr.codediff.config
@@ -25,6 +27,16 @@ class GitConfigTest extends CodeDiffApplicationTest {
         String localRepo = "D:\\git-test\\base-service";
         String gitUrl = "http://192.168.75.128/rayduan/base-service.git";
         gitConfig.cloneRepository(gitUrl, localRepo, "2ea401406d775005245faa0a57d6e08db348433f");
+    }
+
+    @Test
+    void test1() throws IOException, InterruptedException {
+        String exc = "java -jar /Users/songyuqi/Downloads/org.jacoco.cli-0.8.7-SNAPSHOT-nodeps.jar report " +
+                "/Users/songyuqi/Downloads/jacoco.exec --classfiles /Users/songyuqi/Downloads/code/caocao-dic/master/dic-core/target/classes --sourcefiles /Users/songyuqi/Downloads/code/caocao-dic/master/dic-core/src/main/java --html /Users/songyuqi/Downloads/jacoco/report/dic/report --diffCode \"[{\\\"classFile\\\":\\\"com/caocao/dic/core/service/provider/sdkv3/ChargeServiceSdkApiImpl\\\",\\\"methodInfos\\\":[{\\\"methodName\\\":\\\"chargeStart\\\",\\\"parameters\\\":\\\"ChargeStartRequest request\\\"},{\\\"methodName\\\":\\\"checkBeforeChargeStart\\\",\\\"parameters\\\":\\\"ChargeStartRequest request\\\"}],\\\"type\\\":\\\"MODIFY\\\"},{\\\"classFile\\\":\\\"com/caocao/dic/core/charge/manage/QrCodeScanManager\\\",\\\"methodInfos\\\":[{\\\"methodName\\\":\\\"getScanResultDTO\\\",\\\"parameters\\\":\\\"String qrCode\\\"}],\\\"type\\\":\\\"MODIFY\\\"},{\\\"classFile\\\":\\\"com/caocao/dic/core/service/provider/sdkv3/ChargeStationSdkApiImpl\\\",\\\"methodInfos\\\":[{\\\"methodName\\\":\\\"getStationInfoByScanOrEntry\\\",\\\"parameters\\\":\\\"StationChargeRequest stationChargeRequest\\\"},{\\\"methodName\\\":\\\"getGunInfoByScan\\\",\\\"parameters\\\":\\\"String qrCode, String sourceType, String districtCode\\\"},{\\\"methodName\\\":\\\"getQrCodeScanResultByThirdApi\\\",\\\"parameters\\\":\\\"String qrCode\\\"}],\\\"type\\\":\\\"MODIFY\\\"},{\\\"classFile\\\":\\\"com/caocao/dic/core/service/provider/cooperate/CooperateChargingApiImpl\\\",\\\"methodInfos\\\":[{\\\"methodName\\\":\\\"chargeStart\\\",\\\"parameters\\\":\\\"@FluentValid({ExtSourceValidator.class}) ChargeStartRequest request\\\"}],\\\"type\\\":\\\"MODIFY\\\"},{\\\"classFile\\\":\\\"com/caocao/dic/core/infrastructure/retry/listener/AutoPayRetryListener\\\",\\\"methodInfos\\\":[{\\\"methodName\\\":\\\"onRetry\\\",\\\"parameters\\\":\\\"RetryContext ctx\\\"}],\\\"type\\\":\\\"MODIFY\\\"},{\\\"classFile\\\":\\\"com/caocao/dic/core/service/provider/open/OpenChargingServiceApiImpl\\\",\\\"methodInfos\\\":[{\\\"methodName\\\":\\\"chargeStart\\\",\\\"parameters\\\":\\\"@FluentValid({ExtSourceValidator.class}) ChargeStartCmdRequest startCmd\\\"},{\\\"methodName\\\":\\\"checkChargeStartRequest\\\",\\\"parameters\\\":\\\"ChargeStartCmdRequest startCmd\\\"}],\\\"type\\\":\\\"MODIFY\\\"},{\\\"classFile\\\":\\\"com/caocao/dic/core/event/msgevent/listener/OrderPayEventListener\\\",\\\"methodInfos\\\":[{\\\"methodName\\\":\\\"autoPayMsgPush\\\",\\\"parameters\\\":\\\"OrderFlowBaseDTO orderPayResult\\\"}],\\\"type\\\":\\\"MODIFY\\\"},{\\\"classFile\\\":\\\"com/caocao/dic/core/infrastructure/message/KafkaFinishBillReceiver\\\",\\\"methodInfos\\\":[{\\\"methodName\\\":\\\"process\\\",\\\"parameters\\\":\\\"ConsumerRecord<String,String> message\\\"}],\\\"type\\\":\\\"MODIFY\\\"},{\\\"classFile\\\":\\\"com/caocao/dic/core/service/pay/impl/AutoPayServiceImpl\\\",\\\"methodInfos\\\":[{\\\"methodName\\\":\\\"addAutoPayTask\\\",\\\"parameters\\\":\\\"AutoPayContext context\\\"}],\\\"type\\\":\\\"MODIFY\\\"},{\\\"classFile\\\":\\\"com/caocao/dic/core/service/provider/open/OpenChargingStationServiceImpl\\\",\\\"methodInfos\\\":[{\\\"methodName\\\":\\\"getPileInfoByScan\\\",\\\"parameters\\\":\\\"@FluentValid({ExtSourceValidator.class}) QueryPileInfoByScanRequest scanRequest\\\"},{\\\"methodName\\\":\\\"getPileInfoByScan\\\",\\\"parameters\\\":\\\"String qrCode, String providerNo, String pileNo, String sourceTypeKey\\\"}],\\\"type\\\":\\\"MODIFY\\\"},{\\\"classFile\\\":\\\"com/caocao/dic/common/util/SourceTypeHelper\\\",\\\"methodInfos\\\":[{\\\"methodName\\\":\\\"needCheckPrefrozenSourceType\\\",\\\"parameters\\\":\\\"String sourceTypeKey\\\"}],\\\"type\\\":\\\"MODIFY\\\"}]\" --encoding=utf8";
+        Runtime run = Runtime.getRuntime();
+        Process p = run.exec(exc);
+        p.waitFor();
+        p.destroy();
     }
 
     @Test

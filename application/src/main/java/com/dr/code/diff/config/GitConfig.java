@@ -108,6 +108,25 @@ public class GitConfig {
         return git;
     }
 
+    //直接使用本地代码
+    public Git useRespository(String gitUrl, String codePath, String commitId){
+        Git git = null;
+        try {
+            LoggerUtil.info(log, "本地代码存在,直接使用", gitUrl, codePath);
+            git = Git.open(new File(codePath));
+            git.getRepository().getFullBranch();
+            //判断是分支还是commitId，分支做更新，commitId无法改变用原有的
+//            if (git.getRepository().exactRef(Constants.HEAD).isSymbolic()) {
+//                //更新代码
+//                git.pull().setCredentialsProvider(new UsernamePasswordCredentialsProvider(gitUserName, gitPassWord)).call();
+//            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new BizException(BizCode.GIT_OPERATED_FAIlED);
+        }
+        return git;
+    }
+
     /**
      * 判断工作目录是否存在，本来可以每次拉去代码时删除再拉取，但是这样代码多的化IO比较大，所以就代码可以复用
      *
@@ -145,7 +164,9 @@ public class GitConfig {
     public List<ClassInfoResult> diffMethods(DiffMethodParams diffMethodParams) {
         try {
             //原有代码git对象
-            Git baseGit = cloneRepository(diffMethodParams.getGitUrl(), getLocalDir(diffMethodParams.getGitUrl(), localBaseRepoDir, diffMethodParams.getBaseVersion()), diffMethodParams.getBaseVersion());
+            Git baseGit = cloneRepository(diffMethodParams.getGitUrl(), getLocalDir(diffMethodParams.getGitUrl(),
+                    localBaseRepoDir,
+                    diffMethodParams.getBaseVersion()), diffMethodParams.getBaseVersion());
             //现有代码git对象
             Git nowGit = cloneRepository(diffMethodParams.getGitUrl(), getLocalDir(diffMethodParams.getGitUrl(), localBaseRepoDir, diffMethodParams.getNowVersion()), diffMethodParams.getNowVersion());
             AbstractTreeIterator baseTree = prepareTreeParser(baseGit.getRepository(), diffMethodParams.getBaseVersion());
